@@ -213,7 +213,11 @@ li {
 .btn1:hover {
 	background-color: #4caf50;
 	transform: scale(1.1);
-} /*# sourceMappingURL=style.css.map */
+}
+
+#time {
+	color: green;
+}/*# sourceMappingURL=style.css.map */
 
 		</style>
 	</head>
@@ -221,6 +225,7 @@ li {
 		<h1 class="title">OJOS EN LA PANTALLA</h1>
 		<h2 class="score">Score: <span id="score"></span></h2>
 		<h2 class="score">High Score: <span id="high"></span></h2>
+		<h2 class="score" id="tiempo"><span id="mins"></span> : <span id="secs"></span></h2>
 		<div class="keyboard">
 			<ul class="row row-0">
 				<li class="pinky" id="ESC">ESC</li>
@@ -251,9 +256,7 @@ li {
 				<li class="middle" id="I">I</li>
 				<li class="ring" id="O">O</li>
 				<li class="pinky" id="P">P</li>
-				<li class="pinky" id="[">[</li>
-				<li class="pinky" id="]">]</li>
-				<li class="pinky barra" id="\">\</li>
+				
 			</ul>
 			<ul class="row row-2">
 				<li class="pinky" id="CAPSLOCK">CAPSLOCK</li>
@@ -266,7 +269,6 @@ li {
 				<li class="pointer1st" id="J">J</li>
 				<li class="middle" id="K">K</li>
 				<li class="ring" id="L">L</li>
-				<li class="pinky" id=";">;</li>
 				<li class="pinky" id="ENTER">ENTER</li>
 			</ul>
 			<ul class="row row-3">
@@ -298,6 +300,35 @@ let Score = document.getElementById('score');
 let highScore = document.getElementById('high');
 let score = 0;
 let high = 0;
+let minutes = 7;
+        let seconds = 0;
+        document.getElementById("mins").style.color = "green";
+        document.getElementById("secs").style.color = "green"
+        
+
+setInterval(() => {
+
+if(seconds === 0 && minutes === 0){
+	setTimeout(() => {
+		location.replace('../snake/snake_game.html')
+	})
+} else {
+	if (seconds === 0) {
+minutes--;
+seconds = 59;
+} else {
+seconds--;
+}
+document.getElementById("mins").innerText = minutes
+.toString()
+.padStart(2, "0");
+document.getElementById("secs").innerText = seconds
+.toString()
+.padStart(2, "0");
+}
+
+}, 1000);
+
 
 if (localStorage.getItem('mecanografia_highScore')) {
 	high = localStorage.getItem('mecanografia_highScore');
@@ -305,6 +336,8 @@ if (localStorage.getItem('mecanografia_highScore')) {
 
 highScore.innerHTML = high;
 Score.innerHTML = score;
+
+
 
 function getRandomNumber(min, max) {
 	min = Math.floor(min);
@@ -348,9 +381,11 @@ document.addEventListener('keydown', (e) => {
 		}
 		targetRandomKey();
 	}
+	
 });
 
 targetRandomKey();
+
 
 		</script>
 	</body>
